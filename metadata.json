@@ -1,0 +1,7 @@
+{
+  "name": "Raj Rani Ladies Beauty Parlour",
+  "description": "Premium beauty services, training, and products located in Muzaffarpur, Bihar. UDYAM & Trade Mark Registered.",
+  "requestFramePermissions": [
+    "camera"
+  ]
+}
