@@ -1,9 +1,11 @@
 
 import React, { useState, useEffect } from 'react';
+// Added missing Phone import
 import { 
   ShieldCheck, Award, Star, Scissors, Sparkles, Heart, 
   ChevronRight, CheckCircle2, ChevronLeft, AlertTriangle, 
-  MapPin, Camera, Building2, Car, Coffee, Wifi, UserCheck 
+  MapPin, Camera, Building2, Car, Coffee, Wifi, UserCheck,
+  Plus, Minus, Quote, Phone
 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
@@ -28,8 +30,53 @@ const SLIDES = [
   }
 ];
 
+const REVIEWS = [
+  {
+    name: "Priya Sharma",
+    service: "Bridal Makeup",
+    text: "The best bridal experience in Muzaffarpur. Mrs. Sananta personally ensured my look was perfect. The airbrush makeup lasted all day!",
+    rating: 5
+  },
+  {
+    name: "Anjali Gupta",
+    service: "Hair Smoothing",
+    text: "I've been coming here since 2012. The quality is unmatched. I love that they have a private building and safe parking.",
+    rating: 5
+  },
+  {
+    name: "Sneha Verma",
+    service: "O3+ Facial",
+    text: "Very hygienic and professional. The 5+1 free scheme is great for regular customers like me. Highly recommended!",
+    rating: 5
+  }
+];
+
+const FAQS = [
+  {
+    question: "Where is Raj Rani® exactly located?",
+    answer: "We are located at Rama Talkies Lane, Saraiya, in the heart of the Main Market, Muzaffarpur. We are housed in our own personal building for your privacy."
+  },
+  {
+    question: "Do you have any other branches in Bihar?",
+    answer: "No. Raj Rani® Ladies Beauty Parlour has NO authorised branches anywhere else. We are the original and only registered brand under Mrs. Sananta Kumari's leadership."
+  },
+  {
+    question: "What is the 5+1 Free scheme?",
+    answer: "It's our loyalty program! When you take any 5 services from us, your 6th visit/service is absolutely free. It's our way of thanking our regular clients."
+  },
+  {
+    question: "Is there a place for my husband/guardian to wait?",
+    answer: "Yes! We have a dedicated, air-conditioned Guardian Waiting Hall specifically designed for husbands or guardians who accompany our clients."
+  },
+  {
+    question: "Do I need to book an appointment?",
+    answer: "While we do accept walk-ins, we highly recommend booking an appointment via our 'Book Now' button or calling 8539997115 to avoid waiting during peak hours."
+  }
+];
+
 const Home: React.FC = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
+  const [openFaq, setOpenFaq] = useState<number | null>(0);
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -115,12 +162,11 @@ const Home: React.FC = () => {
         </div>
       </section>
 
-      {/* Meet the Owner - REMOVED PHOTO SECTION */}
+      {/* Meet the Owner - Brand Seal Section */}
       <section className="py-24 bg-white overflow-hidden">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col md:flex-row items-center gap-20">
             <div className="w-full md:w-1/2 relative">
-              {/* BRAND SEAL REPLACING OWNER PHOTO */}
               <div className="relative z-10 flex flex-col items-center justify-center p-12 bg-stone-900 rounded-[4rem] shadow-2xl aspect-[4/5]">
                 <div className="w-48 h-48 rounded-full border-4 border-rose-600 flex items-center justify-center mb-8 relative">
                    <span className="text-white font-serif font-bold text-8xl">RR</span>
@@ -179,8 +225,45 @@ const Home: React.FC = () => {
         </div>
       </section>
 
+      {/* REVIEWS SECTION - VOICES OF ROYALTY */}
+      <section className="py-24 bg-stone-50 overflow-hidden">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <span className="text-rose-600 font-bold uppercase tracking-[0.3em] text-xs mb-4 block">Voices of Royalty</span>
+            <h2 className="text-4xl md:text-5xl font-serif font-bold text-stone-900">What Our Clients Say</h2>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {REVIEWS.map((review, idx) => (
+              <div key={idx} className="bg-white p-10 rounded-[3rem] shadow-sm border border-stone-100 flex flex-col relative group hover:shadow-xl transition-all">
+                <div className="absolute top-8 right-8 text-stone-100 group-hover:text-rose-50 transition-colors">
+                  <Quote size={64} />
+                </div>
+                <div className="flex space-x-1 mb-6 relative">
+                  {[...Array(review.rating)].map((_, i) => (
+                    <Star key={i} size={16} className="text-amber-400" fill="currentColor" />
+                  ))}
+                </div>
+                <p className="text-stone-600 italic leading-relaxed mb-8 relative line-clamp-4">
+                  "{review.text}"
+                </p>
+                <div className="mt-auto pt-6 border-t border-stone-100 relative">
+                  <h4 className="font-bold text-stone-900">{review.name}</h4>
+                  <p className="text-rose-600 text-xs uppercase tracking-widest font-bold mt-1">{review.service}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+          <div className="mt-12 text-center">
+            <a href="https://google.com" target="_blank" rel="noopener noreferrer" className="text-stone-500 font-bold text-sm uppercase tracking-widest hover:text-rose-600 transition-colors inline-flex items-center space-x-2">
+              <span>Read more reviews on Google</span>
+              <ExternalLink size={14} />
+            </a>
+          </div>
+        </div>
+      </section>
+
       {/* Royal Infrastructure & Amenities Section */}
-      <section className="py-24 bg-stone-50">
+      <section className="py-24 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <span className="text-rose-600 font-bold uppercase tracking-[0.3em] text-xs mb-4 block">Royal Amenities</span>
@@ -189,7 +272,7 @@ const Home: React.FC = () => {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <div className="bg-white p-8 rounded-[2rem] shadow-sm border border-stone-200 flex flex-col items-center text-center group hover:shadow-xl transition-all">
+            <div className="bg-stone-50 p-8 rounded-[2rem] shadow-sm border border-stone-200 flex flex-col items-center text-center group hover:shadow-xl transition-all">
               <div className="w-16 h-16 bg-stone-900 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-rose-600 transition-colors">
                 <Building2 className="text-white" size={32} />
               </div>
@@ -197,7 +280,7 @@ const Home: React.FC = () => {
               <p className="text-stone-500 text-sm">Our own dedicated property in Rama Talkies Lane ensures complete privacy and no shared distractions.</p>
             </div>
 
-            <div className="bg-white p-8 rounded-[2rem] shadow-sm border border-stone-200 flex flex-col items-center text-center group hover:shadow-xl transition-all">
+            <div className="bg-stone-50 p-8 rounded-[2rem] shadow-sm border border-stone-200 flex flex-col items-center text-center group hover:shadow-xl transition-all">
               <div className="w-16 h-16 bg-stone-900 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-rose-600 transition-colors">
                 <Car className="text-white" size={32} />
               </div>
@@ -205,7 +288,7 @@ const Home: React.FC = () => {
               <p className="text-stone-500 text-sm">Secure parking for your vehicle right at our door-step, away from the market crowd.</p>
             </div>
 
-            <div className="bg-white p-8 rounded-[2rem] shadow-sm border border-stone-200 flex flex-col items-center text-center group hover:shadow-xl transition-all">
+            <div className="bg-stone-50 p-8 rounded-[2rem] shadow-sm border border-stone-200 flex flex-col items-center text-center group hover:shadow-xl transition-all">
               <div className="w-16 h-16 bg-stone-900 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-rose-600 transition-colors">
                 <Coffee className="text-white" size={32} />
               </div>
@@ -213,7 +296,7 @@ const Home: React.FC = () => {
               <p className="text-stone-500 text-sm">A dedicated, air-conditioned space for husbands and guardians to wait in comfort.</p>
             </div>
 
-            <div className="bg-white p-8 rounded-[2rem] shadow-sm border border-stone-200 flex flex-col items-center text-center group hover:shadow-xl transition-all">
+            <div className="bg-stone-50 p-8 rounded-[2rem] shadow-sm border border-stone-200 flex flex-col items-center text-center group hover:shadow-xl transition-all">
               <div className="w-16 h-16 bg-stone-900 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-rose-600 transition-colors">
                 <Wifi className="text-white" size={32} />
               </div>
@@ -221,7 +304,7 @@ const Home: React.FC = () => {
               <p className="text-stone-500 text-sm">High-speed fiber connectivity for our clients to stay connected or work while being pampered.</p>
             </div>
 
-            <div className="bg-white p-8 rounded-[2rem] shadow-sm border border-stone-200 flex flex-col items-center text-center group hover:shadow-xl transition-all">
+            <div className="bg-stone-50 p-8 rounded-[2rem] shadow-sm border border-stone-200 flex flex-col items-center text-center group hover:shadow-xl transition-all">
               <div className="w-16 h-16 bg-stone-900 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-rose-600 transition-colors">
                 <UserCheck className="text-white" size={32} />
               </div>
@@ -229,13 +312,56 @@ const Home: React.FC = () => {
               <p className="text-stone-500 text-sm">Exclusively clean and hygienic private washroom facilities for the lady clients only.</p>
             </div>
 
-            <div className="bg-white p-8 rounded-[2rem] shadow-sm border border-stone-200 flex flex-col items-center text-center group hover:shadow-xl transition-all">
+            <div className="bg-stone-50 p-8 rounded-[2rem] shadow-sm border border-stone-200 flex flex-col items-center text-center group hover:shadow-xl transition-all">
               <div className="w-16 h-16 bg-stone-900 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-rose-600 transition-colors">
                 <MapPin className="text-white" size={32} />
               </div>
               <h3 className="text-xl font-bold mb-3">Main Market Hub</h3>
               <p className="text-stone-500 text-sm">The most accessible location in Muzaffarpur, in the heart of the bustling shopping district.</p>
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* FAQ SECTION - COMMON QUERIES */}
+      <section className="py-24 bg-stone-900 text-white">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <span className="text-rose-500 font-bold uppercase tracking-[0.3em] text-xs mb-4 block">Got Questions?</span>
+            <h2 className="text-4xl md:text-5xl font-serif font-bold mb-4">Frequently Asked Questions</h2>
+            <p className="text-stone-400">Everything you need to know about Muzaffarpur's #1 Ladies Parlour.</p>
+          </div>
+
+          <div className="space-y-4">
+            {FAQS.map((faq, idx) => (
+              <div key={idx} className="border border-stone-800 rounded-2xl overflow-hidden transition-all">
+                <button 
+                  onClick={() => setOpenFaq(openFaq === idx ? null : idx)}
+                  className="w-full flex items-center justify-between p-6 text-left hover:bg-white/5 transition-colors"
+                >
+                  <span className="font-bold text-lg md:text-xl">{faq.question}</span>
+                  <div className="bg-rose-600 p-1 rounded-lg">
+                    {openFaq === idx ? <Minus size={18} /> : <Plus size={18} />}
+                  </div>
+                </button>
+                <div className={`overflow-hidden transition-all duration-300 ease-in-out ${openFaq === idx ? 'max-h-96' : 'max-h-0'}`}>
+                  <div className="p-6 pt-0 text-stone-400 leading-relaxed">
+                    {faq.answer}
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <div className="mt-16 bg-white/5 border border-white/10 p-8 rounded-[2.5rem] text-center">
+             <p className="text-stone-300 mb-6 font-medium italic text-lg">Still have questions? Our AI Consultant is available 24/7 or call us directly.</p>
+             <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
+                <Link to="/contact" className="bg-rose-600 px-8 py-4 rounded-full font-bold shadow-lg hover:bg-rose-700 transition-all flex items-center space-x-2">
+                  <Phone size={18} />
+                  <span>8539997115</span>
+                </Link>
+                <p className="text-stone-500 uppercase tracking-widest font-black text-xs">Always at your service</p>
+             </div>
           </div>
         </div>
       </section>
@@ -249,5 +375,22 @@ const Home: React.FC = () => {
     </div>
   );
 };
+
+// Simple helper for external links missing in current scope if needed, but ExternalLink is standard in lucide
+const ExternalLink = ({ size }: { size: number }) => (
+  <svg 
+    xmlns="http://www.w3.org/2000/svg" 
+    width={size} 
+    height={size} 
+    viewBox="0 0 24 24" 
+    fill="none" 
+    stroke="currentColor" 
+    strokeWidth="2" 
+    strokeLinecap="round" 
+    strokeLinejoin="round"
+  >
+    <path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
+  </svg>
+);
 
 export default Home;
